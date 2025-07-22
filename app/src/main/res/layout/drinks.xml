@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Chicken Button -->
+    <Button
+        android:id="@+id/btnChicken"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Chicken"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnSides" />
+
+    <Button
+        android:id="@+id/btnSides"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Sides"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnChicken"
+        app:layout_constraintEnd_toStartOf="@id/btnPasta" />
+
+    <Button
+        android:id="@+id/btnPasta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Pasta"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnSides"
+        app:layout_constraintEnd_toStartOf="@id/btnDrinks" />
+
+    <Button
+        android:id="@+id/btnDrinks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Drinks"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnPasta"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Show Orders -->
+    <Button
+        android:id="@+id/btnShowOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:text="Show Orders"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnDrinks" />
+
+    <!-- Iced Tea -->
+    <ImageView
+        android:id="@+id/imgIceTea"
+        android:layout_width="160dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="Iced Tea"
+        app:layout_constraintTop_toBottomOf="@id/btnDrinks"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        app:srcCompat="@drawable/icetea" />
+
+    <TextView
+        android:id="@+id/txtIceTea"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Iced Tea"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="@id/imgIceTea"
+        app:layout_constraintStart_toEndOf="@id/imgIceTea"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnDecreaseIceTea"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:text="-"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/txtIceTea"
+        app:layout_constraintStart_toStartOf="@id/txtIceTea" />
+
+    <TextView
+        android:id="@+id/txtQuantityIceTea"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseIceTea"
+        app:layout_constraintStart_toEndOf="@id/btnDecreaseIceTea" />
+
+    <Button
+        android:id="@+id/btnIncreaseIceTea"
+        android:layout_width="60dp"
+        android:layout_height="55dp"
+        android:text="+"
+        android:textSize="24sp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseIceTea"
+        app:layout_constraintStart_toEndOf="@id/txtQuantityIceTea" />
+
+    <!-- Coffee -->
+    <Button
+        android:id="@+id/btnAddToOrderIceTea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="12dp"
+        android:text="Add"
+        app:layout_constraintStart_toStartOf="@id/btnDecreaseIceTea"
+        app:layout_constraintTop_toBottomOf="@id/btnDecreaseIceTea" />
+
+    <ImageView
+        android:id="@+id/imgCoffee"
+        android:layout_width="172dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:contentDescription="Coffee"
+        app:srcCompat="@drawable/coffee"
+        app:layout_constraintTop_toBottomOf="@id/btnAddToOrderIceTea"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCoffee"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Coffee"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="@id/imgCoffee"
+        app:layout_constraintStart_toEndOf="@id/imgCoffee"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnDecreaseCoffee"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:text="-"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/txtCoffee"
+        app:layout_constraintStart_toStartOf="@id/txtCoffee" />
+
+    <TextView
+        android:id="@+id/txtQuantityCoffee"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseCoffee"
+        app:layout_constraintStart_toEndOf="@id/btnDecreaseCoffee" />
+
+    <Button
+        android:id="@+id/btnIncreaseCoffee"
+        android:layout_width="60dp"
+        android:layout_height="55dp"
+        android:text="+"
+        android:textSize="24sp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseCoffee"
+        app:layout_constraintStart_toEndOf="@id/txtQuantityCoffee" />
+
+    <Button
+        android:id="@+id/btnAddToOrderCoffee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="12dp"
+        android:text="Add"
+        app:layout_constraintStart_toStartOf="@id/btnDecreaseCoffee"
+        app:layout_constraintTop_toBottomOf="@id/btnDecreaseCoffee" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

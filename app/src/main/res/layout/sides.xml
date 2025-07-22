@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Top Navigation Buttons -->
+    <Button
+        android:id="@+id/btnChicken"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Chicken"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnSides" />
+
+    <Button
+        android:id="@+id/btnSides"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Sides"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnChicken"
+        app:layout_constraintEnd_toStartOf="@id/btnPasta" />
+
+    <Button
+        android:id="@+id/btnPasta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Pasta"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnSides"
+        app:layout_constraintEnd_toStartOf="@id/btnDrinks" />
+
+    <Button
+        android:id="@+id/btnDrinks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Drinks"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnPasta"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Burger Section -->
+    <ImageView
+        android:id="@+id/imgBurger"
+        android:layout_width="172dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        app:srcCompat="@drawable/burger"
+        app:layout_constraintTop_toBottomOf="@id/btnChicken"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtBurger"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Hamburger"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="@id/imgBurger"
+        app:layout_constraintStart_toEndOf="@id/imgBurger"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnDecreaseBurger"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:text="-"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/txtBurger"
+        app:layout_constraintTop_toBottomOf="@id/txtBurger" />
+
+    <TextView
+        android:id="@+id/txtQuantityBurger"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/btnDecreaseBurger"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseBurger" />
+
+    <Button
+        android:id="@+id/btnIncreaseBurger"
+        android:layout_width="60dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/txtQuantityBurger"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseBurger" />
+
+    <Button
+        android:id="@+id/btnAddToOrderBurger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@id/btnDecreaseBurger"
+        app:layout_constraintTop_toBottomOf="@id/btnDecreaseBurger" />
+
+
+    <!-- Fries Section -->
+    <ImageView
+        android:id="@+id/imgFries"
+        android:layout_width="172dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        app:srcCompat="@drawable/fries"
+        app:layout_constraintTop_toBottomOf="@id/btnAddToOrderBurger"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtFries"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="French Fries"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="@id/imgFries"
+        app:layout_constraintStart_toEndOf="@id/imgFries"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnDecreaseFries"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:text="-"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/txtFries"
+        app:layout_constraintTop_toBottomOf="@id/txtFries" />
+
+    <TextView
+        android:id="@+id/txtQuantityFries"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/btnDecreaseFries"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseFries" />
+
+    <Button
+        android:id="@+id/btnIncreaseFries"
+        android:layout_width="60dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/txtQuantityFries"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseFries" />
+
+    <Button
+        android:id="@+id/btnAddToOrderFries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@id/btnDecreaseFries"
+        app:layout_constraintTop_toBottomOf="@id/btnDecreaseFries" />
+
+    <Button
+        android:id="@+id/btnShowOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="236dp"
+        android:text="Show Orders"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAddToOrderFries" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

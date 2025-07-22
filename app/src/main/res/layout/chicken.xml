@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Chicken Button -->
+    <Button
+        android:id="@+id/btnChicken"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Chicken"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnSides" />
+
+    <Button
+        android:id="@+id/btnSides"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Sides"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnChicken"
+        app:layout_constraintEnd_toStartOf="@id/btnPasta" />
+
+    <Button
+        android:id="@+id/btnPasta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Pasta"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnSides"
+        app:layout_constraintEnd_toStartOf="@id/btnDrinks" />
+
+    <Button
+        android:id="@+id/btnDrinks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Drinks"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnPasta"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Show Orders -->
+    <Button
+        android:id="@+id/btnShowOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:text="Show Orders"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnDrinks" />
+
+    <!-- Chicken Image -->
+    <ImageView
+        android:id="@+id/imgFrdChkn"
+        android:layout_width="172dp"
+        android:layout_height="153dp"
+        app:srcCompat="@drawable/chicken"
+        app:layout_constraintTop_toBottomOf="@id/btnChicken"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- Quantity Row -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:text="Fried Chicken"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/imgFrdChkn"
+        app:layout_constraintTop_toTopOf="@id/imgFrdChkn" />
+
+    <Button
+        android:id="@+id/btnDecrease"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:text="-"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/textView"
+        app:layout_constraintTop_toBottomOf="@id/textView" />
+
+    <!-- Add to Order Button -->
+    <TextView
+        android:id="@+id/txtQuantity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/btnDecrease"
+        app:layout_constraintTop_toTopOf="@id/btnDecrease" />
+
+    <Button
+        android:id="@+id/btnIncrease"
+        android:layout_width="60dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/txtQuantity"
+        app:layout_constraintTop_toTopOf="@id/btnDecrease" />
+
+    <Button
+        android:id="@+id/btnAddToOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
+        android:text="Add"
+        app:layout_constraintStart_toStartOf="@id/btnDecrease"
+        app:layout_constraintTop_toBottomOf="@id/btnDecrease" />
+
+    <!-- Grilled Chicken -->
+    <ImageView
+        android:id="@+id/imgGrldChkn"
+        android:layout_width="172dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        app:srcCompat="@drawable/grilled_chicken"
+        app:layout_constraintTop_toBottomOf="@id/btnAddToOrder"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Grilled Chicken Description -->
+    <TextView
+        android:id="@+id/txtGrldChkn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:text="Grilled Chicken"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/imgGrldChkn"
+        app:layout_constraintStart_toEndOf="@id/imgGrldChkn"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- Decrease Button -->
+    <Button
+        android:id="@+id/btnDecreaseGrilled"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:text="-"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/txtGrldChkn"
+        app:layout_constraintTop_toBottomOf="@id/txtGrldChkn" />
+
+    <!-- Quantity Text -->
+    <TextView
+        android:id="@+id/txtQuantityGrilled"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/btnDecreaseGrilled"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseGrilled" />
+
+    <!-- Increase Button -->
+    <Button
+        android:id="@+id/btnIncreaseGrilled"
+        android:layout_width="60dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/txtQuantityGrilled"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseGrilled" />
+
+    <!-- Add to Order Button -->
+    <Button
+        android:id="@+id/btnAddToOrderGrilled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
+        android:text="Add"
+        app:layout_constraintStart_toStartOf="@id/btnDecreaseGrilled"
+        app:layout_constraintTop_toBottomOf="@id/btnDecreaseGrilled" />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
