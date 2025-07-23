@@ -1,4 +1,7 @@
 package com.example.resto.RecetOrder
+import OrderItem
+import OrdersSummary
+import ProcessedOrder
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -9,30 +12,22 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.resto.R
-
+import android.widget.*
+import androidx.annotation.OptIn
+import androidx.media3.common.util.Log
+import androidx.media3.common.util.UnstableApi
+import kotlinx.coroutines.*
+import org.json.JSONArray
+import java.net.HttpURLConnection
+import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class RecentOrderActivity : AppCompatActivity() {
 
     private lateinit var ordersListView: ListView
     private lateinit var totalTextView: TextView
-
-    private val dailyOrdersSummary = OrdersSummary(
-        orders = listOf(
-            ProcessedOrder("D001", listOf(OrderItem("item1", "Pizza", 1, 12.99)), System.currentTimeMillis()),
-            ProcessedOrder("D002", listOf(OrderItem("item2", "Coke", 2, 1.50), OrderItem("item3", "Fries", 1, 3.00)), System.currentTimeMillis() - 100000)
-        ),
-        overallTotal = 12.99 + (2 * 1.50) + 3.00
-    )
-
-    private val weeklyOrdersSummary = OrdersSummary(
-        orders = listOf(
-            ProcessedOrder("W001", listOf(OrderItem("itemW1", "Burger", 2, 5.50)), System.currentTimeMillis() - 86400000L * 2),
-            ProcessedOrder("W002", listOf(OrderItem("itemW2", "Salad", 1, 7.25), OrderItem("itemW3", "Water", 1, 1.00)), System.currentTimeMillis() - 86400000L * 3)
-        ),
-        overallTotal = (2 * 5.50) + 7.25 + 1.00
-    )
-
-    private val monthlyOrdersSummary = OrdersSummary(emptyList(), 0.0)
+    private val baseUrl = "http://192.168.1.12/MP/get_orders.php" // ← adjust IP and folder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,18 +41,77 @@ class RecentOrderActivity : AppCompatActivity() {
 
         tabGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.tabDaily -> showOrders(dailyOrdersSummary)
-                R.id.tabWeekly -> showOrders(weeklyOrdersSummary)
-                R.id.tabMonthly -> showOrders(monthlyOrdersSummary)
+                R.id.tabDaily -> fetchOrders("daily")
+                R.id.tabWeekly -> fetchOrders("weekly")
+                R.id.tabMonthly -> fetchOrders("monthly")
             }
         }
 
-        closeButton.setOnClickListener {
-            finish() // Closes the activity
-        }
+        closeButton.setOnClickListener { finish() }
 
-        // Show default
-        showOrders(dailyOrdersSummary)
+        fetchOrders("daily") // default
+    }
+
+    @OptIn(UnstableApi::class)
+    private fun fetchOrders(range: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL("http://192.168.1.12/MP/get_orders.php?period=$range")
+                Log.d("FETCH_ORDERS", "Request URL: $url")
+
+                val conn = url.openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+
+                val data = conn.inputStream.bufferedReader().readText()
+                Log.d("FETCH_ORDERS", "Raw response: $data")
+
+                val jsonArray = JSONArray(data)
+
+                val groupedOrders = mutableMapOf<String, MutableList<OrderItem>>()
+                val timestamps = mutableMapOf<String, Long>()
+
+                for (i in 0 until jsonArray.length()) {
+                    val obj = jsonArray.getJSONObject(i)
+                    val orderId = obj.getString("order_id")
+                    val item = OrderItem(
+                        "item",
+                        obj.getString("item_name"),
+                        obj.getInt("quantity"),
+                        obj.getDouble("price")
+                    )
+
+                    val timestampStr = obj.getString("date_order") // the column from MySQL
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                    val date = try {
+                        sdf.parse(timestampStr)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        null
+                    }
+                    val timestamp = date?.time ?: 0L
+
+                    groupedOrders.getOrPut(orderId) { mutableListOf() }.add(item)
+                    timestamps[orderId] = timestamp
+                }
+
+                val orders = groupedOrders.map { (id, items) ->
+                    ProcessedOrder(id, items, timestamps[id] ?: 0L)
+                }
+
+                val total = orders.sumOf { it.orderTotal }
+                val summary = OrdersSummary(orders, total)
+
+                withContext(Dispatchers.Main) {
+                    showOrders(summary)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@RecentOrderActivity, "Failed to fetch orders", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun showOrders(summary: OrdersSummary) {
@@ -80,6 +134,3 @@ class RecentOrderActivity : AppCompatActivity() {
         ordersListView.adapter = adapter
     }
 }
-
-
-// testestetse

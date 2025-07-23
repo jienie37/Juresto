@@ -1,12 +1,22 @@
-package com.example.resto.RecetOrder
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-// OrderItem.kt
 data class OrderItem(val id: String, val name: String, val quantity: Int, val unitPrice: Double)
 
-// ProcessedOrder.kt
-data class ProcessedOrder(val orderId: String, val items: List<OrderItem>, val timestamp: Long) {
+data class ProcessedOrder(
+    val orderId: String,
+    val items: List<OrderItem>,
+    val orderTimestamp: Long
+) {
     val orderTotal: Double get() = items.sumOf { it.quantity * it.unitPrice }
+
+    val formattedDate: String
+        get() = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(orderTimestamp))
 }
 
-// OrdersSummary.kt
-data class OrdersSummary(val orders: List<ProcessedOrder>, val overallTotal: Double)
+data class OrdersSummary(
+    val orders: List<ProcessedOrder>,
+    val overallTotal: Double
+)
+
