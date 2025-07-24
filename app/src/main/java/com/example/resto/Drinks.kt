@@ -28,11 +28,20 @@ class Drinks : AppCompatActivity() {
         val btnDecreaseCoffee = findViewById<Button>(R.id.btnDecreaseCoffee)
         val btnAddToOrderCoffee = findViewById<Button>(R.id.btnAddToOrderCoffee)
 
-        // Iced Tea Logic
+        // Coke Views
+
+        // --- Quantity Update Functions ---
         fun updateTeaQuantity() {
             txtQuantityTea.text = quantityTea.toString()
         }
 
+        fun updateCoffeeQuantity() {
+            txtQuantityCoffee.text = quantityCoffee.toString()
+        }
+
+
+
+        // --- Iced Tea Logic ---
         btnIncreaseTea.setOnClickListener {
             quantityTea++
             updateTeaQuantity()
@@ -47,44 +56,19 @@ class Drinks : AppCompatActivity() {
 
         btnAddToOrderTea.setOnClickListener {
             if (quantityTea > 0) {
-                OrderManager.addItem("$quantityTea Iced Tea")
-                Toast.makeText(this, "Added to order!", Toast.LENGTH_SHORT).show()
+                OrderManager.addItem("Iced Tea", quantityTea, 30.0)
+                Toast.makeText(this, "Iced Tea added to order!", Toast.LENGTH_SHORT).show()
                 quantityTea = 0
                 updateTeaQuantity()
             } else {
-                Toast.makeText(this, "Select at least 1 Iced Tea", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please select at least 1 Iced Tea", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Coffee Logic
-        fun updateCoffeeQuantity() {
-            txtQuantityCoffee.text = quantityCoffee.toString()
-        }
 
-        btnIncreaseCoffee.setOnClickListener {
-            quantityCoffee++
-            updateCoffeeQuantity()
-        }
 
-        btnDecreaseCoffee.setOnClickListener {
-            if (quantityCoffee > 0) {
-                quantityCoffee--
-                updateCoffeeQuantity()
-            }
-        }
 
-        btnAddToOrderCoffee.setOnClickListener {
-            if (quantityCoffee > 0) {
-                OrderManager.addItem("$quantityCoffee Coffee")
-                Toast.makeText(this, "Added to order!", Toast.LENGTH_SHORT).show()
-                quantityCoffee = 0
-                updateCoffeeQuantity()
-            } else {
-                Toast.makeText(this, "Select at least 1 Coffee", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        // Show Orders Button
+        // --- Show Order Button ---
         findViewById<Button>(R.id.btnShowOrder).setOnClickListener {
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)

@@ -9,45 +9,43 @@ import androidx.appcompat.app.AppCompatActivity
 
 class Chicken : AppCompatActivity() {
 
-    private var quantityFried = 0
     private var quantityGrilled = 0
+    private var quantityFried = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.chicken)
 
-        // Fried Chicken Views
-        val txtQuantity = findViewById<TextView>(R.id.txtQuantity)
-        val btnIncrease = findViewById<Button>(R.id.btnIncrease)
-        val btnDecrease = findViewById<Button>(R.id.btnDecrease)
-        val btnAddToOrder = findViewById<Button>(R.id.btnAddToOrder)
-
-        // Grilled Chicken Views
         val txtQuantityGrilled = findViewById<TextView>(R.id.txtQuantityGrilled)
         val btnIncreaseGrilled = findViewById<Button>(R.id.btnIncreaseGrilled)
         val btnDecreaseGrilled = findViewById<Button>(R.id.btnDecreaseGrilled)
         val btnAddToOrderGrilled = findViewById<Button>(R.id.btnAddToOrderGrilled)
 
-        // Fried Chicken Logic
+        val txtQuantityFried = findViewById<TextView>(R.id.txtQuantity)
+        val btnIncreaseFried = findViewById<Button>(R.id.btnIncrease)
+        val btnDecreaseFried = findViewById<Button>(R.id.btnDecrease)
+        val btnAddToOrderFried = findViewById<Button>(R.id.btnAddToOrder)
+
         fun updateFriedQuantityText() {
-            txtQuantity.text = quantityFried.toString()
+            txtQuantityFried.text = quantityFried.toString()
         }
 
-        btnIncrease.setOnClickListener {
+        btnIncreaseFried.setOnClickListener {
             quantityFried++
             updateFriedQuantityText()
         }
 
-        btnDecrease.setOnClickListener {
+        btnDecreaseFried.setOnClickListener {
             if (quantityFried > 0) {
                 quantityFried--
                 updateFriedQuantityText()
             }
         }
 
-        btnAddToOrder.setOnClickListener {
+        btnAddToOrderFried.setOnClickListener {
             if (quantityFried > 0) {
-                OrderManager.addItem("$quantityFried Fried Chicken(s)")
+                OrderManager.addItem("Fried Chicken", quantityFried, 75.0)
                 Toast.makeText(this, "Added to order!", Toast.LENGTH_SHORT).show()
                 quantityFried = 0
                 updateFriedQuantityText()
@@ -56,7 +54,7 @@ class Chicken : AppCompatActivity() {
             }
         }
 
-        // Grilled Chicken Logic
+
         fun updateGrilledQuantityText() {
             txtQuantityGrilled.text = quantityGrilled.toString()
         }
@@ -75,7 +73,7 @@ class Chicken : AppCompatActivity() {
 
         btnAddToOrderGrilled.setOnClickListener {
             if (quantityGrilled > 0) {
-                OrderManager.addItem("$quantityGrilled Grilled Chicken(s)")
+                OrderManager.addItem("Grilled Chicken", quantityGrilled, 85.0)
                 Toast.makeText(this, "Added to order!", Toast.LENGTH_SHORT).show()
                 quantityGrilled = 0
                 updateGrilledQuantityText()
@@ -85,11 +83,7 @@ class Chicken : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnShowOrder).setOnClickListener {
-            val intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MenuActivity::class.java))
         }
-
-
-
     }
 }

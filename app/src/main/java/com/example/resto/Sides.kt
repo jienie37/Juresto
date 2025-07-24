@@ -47,8 +47,8 @@ class Sides : AppCompatActivity() {
 
         btnAddToOrderBurger.setOnClickListener {
             if (quantityBurger > 0) {
-                OrderManager.addItem("$quantityBurger Hamburger(s)")
-                Toast.makeText(this, "Added to order!", Toast.LENGTH_SHORT).show()
+                OrderManager.addItem("Hamburger", quantityBurger, 45.0)
+                Toast.makeText(this, "Hamburger added to order!", Toast.LENGTH_SHORT).show()
                 quantityBurger = 0
                 updateBurgerQuantity()
             } else {
@@ -75,8 +75,8 @@ class Sides : AppCompatActivity() {
 
         btnAddToOrderFries.setOnClickListener {
             if (quantityFries > 0) {
-                OrderManager.addItem("$quantityFries French Fries")
-                Toast.makeText(this, "Added to order!", Toast.LENGTH_SHORT).show()
+                OrderManager.addItem("French Fries", quantityFries, 30.0)
+                Toast.makeText(this, "Fries added to order!", Toast.LENGTH_SHORT).show()
                 quantityFries = 0
                 updateFriesQuantity()
             } else {

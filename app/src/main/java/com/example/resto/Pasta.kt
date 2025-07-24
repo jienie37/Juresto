@@ -47,8 +47,8 @@ class Pasta : AppCompatActivity() {
 
         btnAddToOrderSpag.setOnClickListener {
             if (quantitySpag > 0) {
-                OrderManager.addItem("$quantitySpag Spaghetti")
-                Toast.makeText(this, "Added to order!", Toast.LENGTH_SHORT).show()
+                OrderManager.addItem("Spaghetti", quantitySpag, 50.0)
+                Toast.makeText(this, "Spaghetti added to order!", Toast.LENGTH_SHORT).show()
                 quantitySpag = 0
                 updateSpagQuantity()
             } else {
@@ -75,8 +75,8 @@ class Pasta : AppCompatActivity() {
 
         btnAddToOrderPesto.setOnClickListener {
             if (quantityPesto > 0) {
-                OrderManager.addItem("$quantityPesto Pesto Pasta")
-                Toast.makeText(this, "Added to order!", Toast.LENGTH_SHORT).show()
+                OrderManager.addItem("Pesto Pasta", quantityPesto, 60.0)
+                Toast.makeText(this, "Pesto added to order!", Toast.LENGTH_SHORT).show()
                 quantityPesto = 0
                 updatePestoQuantity()
             } else {

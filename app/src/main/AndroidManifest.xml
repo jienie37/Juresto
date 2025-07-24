@@ -39,7 +39,7 @@
         <!-- Pasta.kt -->
         <activity android:name=".Pasta" />
 
-        <!-- Drinks.kt -->
+        <!-- Drinks.<activity android:name=".Drinks" />kt -->
         <activity android:name=".Drinks" />
 
         <activity android:name=".RecetOrder.RecentOrderActivity" />

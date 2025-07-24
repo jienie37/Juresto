@@ -2,20 +2,22 @@ package com.example.resto
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.util.Log
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
 
 class MenuActivity : AppCompatActivity() {
+
+    private var currentOrderId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.order)
 
-        // Load and show order list immediately
-        val txtOrderSummary = findViewById<TextView>(R.id.txtOrderSummary)
-        val orders = OrderManager.getOrders().joinToString("\n")
-        txtOrderSummary.text = if (orders.isNotEmpty()) orders else "No orders yet."
+        updateOrderSummary()
 
         findViewById<Button>(R.id.btnChicken).setOnClickListener {
             startActivity(Intent(this, Chicken::class.java))
@@ -34,30 +36,93 @@ class MenuActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnShowOrder).setOnClickListener {
-            // When clicked, show current orders in the txtOrderSummary TextView
-            val orders = OrderManager.getOrders().joinToString("\n")
-            val txtOrderSummary = findViewById<TextView>(R.id.txtOrderSummary)
-            txtOrderSummary.text = if (orders.isNotEmpty()) orders else "No orders yet."
+            updateOrderSummary()
         }
 
+        // 🔴 Confirm Order Button
         findViewById<Button>(R.id.btnConfirmOrder).setOnClickListener {
-            val orders = OrderManager.getOrders()
+            if (currentOrderId == null) {
+                currentOrderId = System.currentTimeMillis().toString()
+            }
 
-            if (orders.isEmpty()) {
+            val orderList = OrderManager.getOrders()
+            if (orderList.isEmpty()) {
                 Toast.makeText(this, "No orders to confirm.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            //DITO ILALAGAY YUNG CODE PARA IPASOK SA DATABASE
-            // Example: send to database logic (replace with your actual database call)
-            //sendOrderToDatabase(orders)
+            for (order in orderList) {
+                sendOrderToServer(
+                    currentOrderId!!,
+                    order.itemName,
+                    order.quantity.toString(),
+                    order.price.toString()
+                )
+            }
 
-            // Clear orders after confirming
             OrderManager.clearOrders()
-            findViewById<TextView>(R.id.txtOrderSummary).text = "No orders yet."
+            updateOrderSummary()
+            Toast.makeText(this, "Order confirmed and sent to server!", Toast.LENGTH_LONG).show()
 
-            Toast.makeText(this, "Order confirmed!", Toast.LENGTH_LONG).show()
+            currentOrderId = null
+        }
+    }
+
+    // 🧾 Dynamically show each item with a Remove button
+    private fun updateOrderSummary() {
+        val orderList = OrderManager.getOrders()
+        val container = findViewById<LinearLayout>(R.id.orderListContainer)
+        container.removeAllViews()
+
+        if (orderList.isEmpty()) {
+            val emptyText = TextView(this)
+            emptyText.text = "No orders yet."
+            emptyText.textSize = 18f
+            container.addView(emptyText)
+            return
         }
 
+        for (order in orderList) {
+            val itemLayout = LinearLayout(this)
+            itemLayout.orientation = LinearLayout.HORIZONTAL
+            itemLayout.setPadding(0, 10, 0, 10)
+
+            val itemText = TextView(this)
+            itemText.text = "${order.quantity} x ${order.itemName} - ₱${order.price * order.quantity}"
+            itemText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+
+            val deleteBtn = Button(this)
+            deleteBtn.text = "Remove"
+            deleteBtn.setOnClickListener {
+                OrderManager.removeItem(order.itemName)
+                updateOrderSummary()
+            }
+
+            itemLayout.addView(itemText)
+            itemLayout.addView(deleteBtn)
+            container.addView(itemLayout)
+        }
+    }
+
+    private fun sendOrderToServer(orderId: String, itemName: String, quantity: String, price: String) {
+        Thread {
+            try {
+                val encodedItemName = URLEncoder.encode(itemName, "UTF-8")
+                val urlString = "http://192.168.1.3/MP/add_orders.php?order_id=$orderId&item_name=$encodedItemName&quantity=$quantity&price=$price"
+
+                val url = URL(urlString)
+                val conn = url.openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+
+                val responseCode = conn.responseCode
+                val response = conn.inputStream.bufferedReader().readText()
+
+                Log.d("ServerResponse", "Response Code: $responseCode\n$response")
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("ServerError", "Error sending order: ${e.message}")
+            }
+        }.start()
     }
 }
