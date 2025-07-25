@@ -84,9 +84,35 @@ class Sides : AppCompatActivity() {
             }
         }
 
-        // Show Orders Button
+        // Show Order returns to MenuActivity
         findViewById<Button>(R.id.btnShowOrder).setOnClickListener {
             val intent = Intent(this, MenuActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
+
+        // Category switching buttons
+        findViewById<Button>(R.id.btnChicken).setOnClickListener {
+            val intent = Intent(this, Chicken::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.btnSides).setOnClickListener {
+            val intent = Intent(this, Sides::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.btnPasta).setOnClickListener {
+            val intent = Intent(this, Pasta::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.btnDrinks).setOnClickListener {
+            val intent = Intent(this, Drinks::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
     }

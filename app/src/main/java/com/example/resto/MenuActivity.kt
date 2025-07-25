@@ -39,6 +39,14 @@ class MenuActivity : AppCompatActivity() {
             updateOrderSummary()
         }
 
+        findViewById<Button>(R.id.btnMainMenu).setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
+
+
         // 🔴 Confirm Order Button
         findViewById<Button>(R.id.btnConfirmOrder).setOnClickListener {
             if (currentOrderId == null) {
@@ -125,4 +133,10 @@ class MenuActivity : AppCompatActivity() {
             }
         }.start()
     }
+    override fun onResume() {
+        super.onResume()
+        updateOrderSummary()
+    }
+
+
 }
