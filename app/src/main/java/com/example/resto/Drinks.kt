@@ -28,8 +28,6 @@ class Drinks : AppCompatActivity() {
         val btnDecreaseCoffee = findViewById<Button>(R.id.btnDecreaseCoffee)
         val btnAddToOrderCoffee = findViewById<Button>(R.id.btnAddToOrderCoffee)
 
-        // Coke Views
-
         // --- Quantity Update Functions ---
         fun updateTeaQuantity() {
             txtQuantityTea.text = quantityTea.toString()
@@ -38,8 +36,6 @@ class Drinks : AppCompatActivity() {
         fun updateCoffeeQuantity() {
             txtQuantityCoffee.text = quantityCoffee.toString()
         }
-
-
 
         // --- Iced Tea Logic ---
         btnIncreaseTea.setOnClickListener {
@@ -65,7 +61,29 @@ class Drinks : AppCompatActivity() {
             }
         }
 
+        // --- Coffee Logic ---
+        btnIncreaseCoffee.setOnClickListener {
+            quantityCoffee++
+            updateCoffeeQuantity()
+        }
 
+        btnDecreaseCoffee.setOnClickListener {
+            if (quantityCoffee > 0) {
+                quantityCoffee--
+                updateCoffeeQuantity()
+            }
+        }
+
+        btnAddToOrderCoffee.setOnClickListener {
+            if (quantityCoffee > 0) {
+                OrderManager.addItem("Coffee", quantityCoffee, 40.0) // Adjust price if needed
+                Toast.makeText(this, "Coffee added to order!", Toast.LENGTH_SHORT).show()
+                quantityCoffee = 0
+                updateCoffeeQuantity()
+            } else {
+                Toast.makeText(this, "Please select at least 1 Coffee", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Show Order returns to MenuActivity
         findViewById<Button>(R.id.btnShowOrder).setOnClickListener {
@@ -98,6 +116,5 @@ class Drinks : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
-
     }
 }

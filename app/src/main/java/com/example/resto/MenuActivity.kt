@@ -46,6 +46,17 @@ class MenuActivity : AppCompatActivity() {
             finish()
         }
 
+        findViewById<Button>(R.id.btnClearOrders).setOnClickListener {
+            if (OrderManager.getOrders().isNotEmpty()) {
+                OrderManager.clearOrders()
+                updateOrderSummary()
+                Toast.makeText(this, "All orders have been cleared.", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "No orders to clear.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
 
         // 🔴 Confirm Order Button
         findViewById<Button>(R.id.btnConfirmOrder).setOnClickListener {
