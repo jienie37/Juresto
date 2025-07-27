@@ -39,11 +39,6 @@ class MainActivity : AppCompatActivity() {
                 val conn = url.openConnection() as HttpURLConnection
                 conn.requestMethod = "GET"
 
-                val input = conn.inputStream.bufferedReader().readText()
-
-                runOnUiThread {
-                    Toast.makeText(this, "Server says: $input", Toast.LENGTH_LONG).show()
-                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 runOnUiThread {
