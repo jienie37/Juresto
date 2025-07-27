@@ -21,13 +21,14 @@ import org.json.JSONArray
 import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class RecentOrderActivity : AppCompatActivity() {
 
     private lateinit var ordersListView: ListView
     private lateinit var totalTextView: TextView
-    private val baseUrl = "http://192.168.1.12/MP/get_orders.php" // ← adjust IP and folder
+    private val baseUrl = "http://192.168.1.12/MP/get_orders.php?"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,11 +107,12 @@ class RecentOrderActivity : AppCompatActivity() {
                 }
 
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e("FETCH_ORDERS", "Exception: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@RecentOrderActivity, "Failed to fetch orders", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@RecentOrderActivity, "Failed: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                 }
             }
+
         }
     }
 
@@ -122,15 +124,25 @@ class RecentOrderActivity : AppCompatActivity() {
                 val view = convertView ?: layoutInflater.inflate(R.layout.item_recent_order, parent, false)
                 val order = getItem(position)!!
 
+                // Set Order ID
                 view.findViewById<TextView>(R.id.orderIdTextView).text = "Order ID: ${order.orderId}"
+
+                // Format and set date
+                view.findViewById<TextView>(R.id.orderDateTextView).text = "Date: ${order.formattedDate}"
+
+                // Set item list
                 view.findViewById<TextView>(R.id.itemsTextView).text = order.items.joinToString("\n") {
                     "${it.name} (x${it.quantity}) - \$${String.format("%.2f", it.unitPrice)}"
                 }
+
+                // Set order total
                 view.findViewById<TextView>(R.id.orderTotalTextView).text = "Order Total: $${String.format("%.2f", order.orderTotal)}"
+
                 return view
             }
         }
 
         ordersListView.adapter = adapter
     }
+
 }
