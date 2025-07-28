@@ -56,9 +56,6 @@ class MenuActivity : AppCompatActivity() {
             }
         }
 
-
-
-        // 🔴 Confirm Order Button
         findViewById<Button>(R.id.btnConfirmOrder).setOnClickListener {
             if (currentOrderId == null) {
                 currentOrderId = System.currentTimeMillis().toString()
@@ -87,17 +84,20 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
-    // 🧾 Dynamically show each item with a Remove button
     private fun updateOrderSummary() {
         val orderList = OrderManager.getOrders()
         val container = findViewById<LinearLayout>(R.id.orderListContainer)
+        val totalTextView = findViewById<TextView>(R.id.txtOrderSummary)
         container.removeAllViews()
+
+        var totalAmount = 0.0
 
         if (orderList.isEmpty()) {
             val emptyText = TextView(this)
             emptyText.text = "No orders yet."
             emptyText.textSize = 18f
             container.addView(emptyText)
+            totalTextView.text = ""
             return
         }
 
@@ -107,7 +107,8 @@ class MenuActivity : AppCompatActivity() {
             itemLayout.setPadding(0, 10, 0, 10)
 
             val itemText = TextView(this)
-            itemText.text = "${order.quantity} x ${order.itemName} - ₱${order.price * order.quantity}"
+            val itemTotal = order.price * order.quantity
+            itemText.text = "${order.quantity} x ${order.itemName} - ₱$itemTotal"
             itemText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
 
             val deleteBtn = Button(this)
@@ -120,14 +121,20 @@ class MenuActivity : AppCompatActivity() {
             itemLayout.addView(itemText)
             itemLayout.addView(deleteBtn)
             container.addView(itemLayout)
+
+            totalAmount += itemTotal
         }
+
+        // Show total
+        totalTextView.text = "Total: ₱%.2f".format(totalAmount)
     }
 
     private fun sendOrderToServer(orderId: String, itemName: String, quantity: String, price: String) {
         Thread {
             try {
                 val encodedItemName = URLEncoder.encode(itemName, "UTF-8")
-                val urlString = "http://192.168.1.3/MP/add_orders.php?order_id=$orderId&item_name=$encodedItemName&quantity=$quantity&price=$price"
+                val urlString =
+                    "http://192.168.1.3/MP/add_orders.php?order_id=$orderId&item_name=$encodedItemName&quantity=$quantity&price=$price"
 
                 val url = URL(urlString)
                 val conn = url.openConnection() as HttpURLConnection
@@ -144,10 +151,9 @@ class MenuActivity : AppCompatActivity() {
             }
         }.start()
     }
+
     override fun onResume() {
         super.onResume()
         updateOrderSummary()
     }
-
-
 }
